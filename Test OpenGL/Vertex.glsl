@@ -1,30 +1,17 @@
-
 #version 330 core
-layout (location = 0) in vec3 Position;
-layout ( location = 1) in vec3 Color ;
-out vec3 interpolatedColor ;
-void main() {
-    //vec3 a = vec3(1.0,0.0,0.0); Addera a till position för att translera, *a för att skala
-    gl_Position = vec4(Position,1.0);
-    interpolatedColor = Color ; // Pass interpolated color to fragment shader
-}
-
-
-
-/*
- #version 330 core
-uniform mat4 M1;
+uniform mat4 MV;
+uniform mat4 P;
+uniform mat4 M2;
+out vec2 st;
+out vec3 interpolatedNormal;
 layout(location=0)in vec3 Position;
 layout(location=1)in vec3 Normal;
 layout(location=2) in vec2 TexCoord;
-out vec3 interpolatedNormal;
-out vec2 st;
-void main(){
-    gl_Position = vec4(Position, 1.0); // Special , required output
-    vec3 transformedNormal = mat3(M1)*Normal;
+void main() {
+    gl_Position = P*MV*M2*vec4(Position, 1.0); // Special , required output
+    vec3 transformedNormal = mat3(MV)*Normal;
     interpolatedNormal = normalize(transformedNormal);
-    //interpolatedNormal = Normal; // Will be interpolated across the triangle
     st = TexCoord; // Will also be interpolated across the triangle
-}*/
-
-
+    
+    
+}
